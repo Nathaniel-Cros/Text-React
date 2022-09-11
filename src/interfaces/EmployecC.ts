@@ -5,6 +5,8 @@ export interface EmployeeC {
     employeesFiltered: Employee[]
     pagination: number
     maxPages: number
+    searchFilter: boolean
     getEmployees: () => void
-    filteredEmployees: (allEmployees:Employee[], init: number, end: number) => void
+    filteredEmployees: (allEmployees: Employee[], init: number, end: number) => void
+    searchEmployees: (allEmployees: Employee[], search: string) => void
 }

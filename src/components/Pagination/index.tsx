@@ -4,9 +4,11 @@ import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
 
 const Pagination = () => {
     const EmployeesC = React.useContext(EmployeeContext)
-    const { employees, pagination, maxPages } = EmployeesC
+    const { employees, pagination, maxPages, searchFilter } = EmployeesC
     const [ initElement, setInitElement ] = React.useState(1)
     const [ endElement, setEndElement ] = React.useState(10)
+
+    if( searchFilter ) return null
 
     const changePagination = ( next:boolean ) => {
         const end = next? (pagination*10)+10:(pagination*10)-10

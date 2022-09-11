@@ -6,6 +6,7 @@ type EmployeeActions =
     | { type: 'pagination', payload: number }
     | { type: 'maxPages', payload: number }
     | { type: 'filteringEmployees', payload: Employee[] }
+    | { type: 'searchActive', payload: boolean }
 
 export const EmployeeReducer = (state: EmployeeC, action: EmployeeActions): EmployeeC => {
     switch (action.type) {
@@ -28,6 +29,11 @@ export const EmployeeReducer = (state: EmployeeC, action: EmployeeActions): Empl
             return {
                 ...state,
                 employeesFiltered: [...action.payload]
+            }
+        case 'searchActive':
+            return {
+                ...state,
+                searchFilter: action.payload
             }
         default:
             return state;

@@ -11,8 +11,10 @@ const INITIAL_STATE: EmployeeC = {
     employeesFiltered: [],
     pagination: 1,
     maxPages: 0,
+    searchFilter: false,
     getEmployees: ()=>{},
-    filteredEmployees: (allEmployees:Employee[], init: number, end:number)=>{}
+    filteredEmployees: (allEmployees:Employee[], init: number, end:number)=>{},
+    searchEmployees: (allEmployees:Employee[], search: string)=>{}
 }
 
 export const EmployeeProvider = ({children}:ChildrenProps) => {
@@ -35,10 +37,26 @@ export const EmployeeProvider = ({children}:ChildrenProps) => {
         dispatch({type: 'pagination', payload: end/10})
     }
 
+    const searchEmployees = async (allEmployees:Employee[], search:string) => {
+        try {
+            dispatch({type: 'searchActive', payload: search.length > 0})
+            if (search.length > 0) {
+                const employeeSearch = allEmployees.filter((employee) => employee.name.toLowerCase().includes(search.toLowerCase()) ||
+                    employee.last_name.toLowerCase().includes(search.toLowerCase()))
+                dispatch({type: 'filteringEmployees', payload: employeeSearch})
+                return
+            }
+            filteredEmployees(allEmployees, 1, 10)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     const [employeeState, dispatch] = React.useReducer(EmployeeReducer, {
         ...INITIAL_STATE,
         getEmployees,
         filteredEmployees,
+        searchEmployees,
     })
 
     React.useEffect(() => {
@@ -51,6 +69,7 @@ export const EmployeeProvider = ({children}:ChildrenProps) => {
             ...employeeState,
             getEmployees,
             filteredEmployees,
+            searchEmployees,
         }}>
             {children}
         </EmployeeContext.Provider>
