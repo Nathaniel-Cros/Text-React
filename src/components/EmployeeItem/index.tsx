@@ -25,8 +25,7 @@ const EmployeeItem = ({employee}: PropsEmployeeItem) => {
                         <dt className='text-sm font-medium text-gray-500'>Cumpleaños</dt>
                         <dd className='mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0'>{
                             new Intl.DateTimeFormat("es-MX", {
-                                dateStyle: "full",
-                                timeStyle: "full"
+                                dateStyle: "short",
                             }).format(new Date(employee.birthday))
                         }</dd>
                     </div>
