@@ -1,6 +1,7 @@
 import React from 'react';
 import HeaderComponent from './components/Header';
 import {AuthProvider} from './context/AuthContext/provider';
+import {EmployeeProvider} from './context/EmployeeContext/provider';
 import {
     Routes,
     Route,
@@ -16,25 +17,27 @@ function App() {
     return (
     <AuthProvider>
         <HeaderComponent />
-        <div className='mx-auto max-w-7xl px-4 sm:px-6'>
-            <Routes>
-                <Route
-                    path='/'
-                    element={<HomeLoginView/>}
-                />
-            <Route element={<ProtectedRoutes/>}>
-                <Route
-                    path='/employee'
-                    element={<EmployeesView/>}
-                />
-                <Route
-                    path='/upload'
-                    element={<UploadView/>}
-                />
-            </Route>
-                <Route path='*' element={<Navigate to='/' replace />} />
-            </Routes>
-        </div>
+        <EmployeeProvider>
+            <div className='mx-auto max-w-7xl px-4 sm:px-6'>
+                <Routes>
+                    <Route
+                        path='/'
+                        element={<HomeLoginView/>}
+                    />
+                <Route element={<ProtectedRoutes/>}>
+                    <Route
+                        path='/employee'
+                        element={<EmployeesView/>}
+                    />
+                    <Route
+                        path='/upload'
+                        element={<UploadView/>}
+                    />
+                </Route>
+                    <Route path='*' element={<Navigate to='/' replace />} />
+                </Routes>
+            </div>
+        </EmployeeProvider>
     </AuthProvider>
     );
 }

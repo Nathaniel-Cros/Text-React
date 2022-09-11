@@ -1,4 +1,4 @@
 import React from 'react';
-//import {AuthC} from '../../interfaces/AuthC';
+import {EmployeeC} from '../../interfaces/EmployecC';
 
-export const EmployeeContext = React.createContext<any>({})
+export const EmployeeContext = React.createContext<EmployeeC>({} as EmployeeC)
