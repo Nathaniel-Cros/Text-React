@@ -4,11 +4,11 @@ import EmployeeItem from '../EmployeeItem';
 
 const EmployeeList = () => {
     const employeeContext = React.useContext(EmployeeContext)
-    const { employees } = employeeContext
+    const { employeesFiltered } = employeeContext
     return (
         <div className='w-full p-4 flex flex-col gap-4'>
-            { employees.length > 0 &&
-                employees.map( (employee, index) => (
+            { employeesFiltered.length > 0 &&
+                employeesFiltered.map( (employee, index) => (
                     <EmployeeItem key={`employeeItem-${index}`} employee={employee}/>
                 ))
             }
