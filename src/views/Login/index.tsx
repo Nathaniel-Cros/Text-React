@@ -37,7 +37,7 @@ const HomeLoginView = () => {
         setRemember(e.checked)
     }
     const clickLogin = () => {
-        localStorage.setItem('AuthStorage', JSON.stringify({isLogin:true, userInfo:{ username:'Nathaniel', email:'osc@natha.com'}}))
+        authContext.Login({ username:'Nathaniel', email:'osc@natha.com'})
     }
 
     return (
@@ -67,6 +67,8 @@ const HomeLoginView = () => {
                                         placeholder='Email address'
                                         value={email}
                                         onChange={handleChangeEmail}
+                                        onPaste={(e)=>{e.preventDefault();}}
+                                        onCopy={(e)=>{e.preventDefault();}}
                                     />
                                 </div>
                                 <div>
@@ -83,6 +85,8 @@ const HomeLoginView = () => {
                                         placeholder='Password'
                                         value={password}
                                         onChange={handleChangePassword}
+                                        onPaste={(e)=>{e.preventDefault();}}
+                                        onCopy={(e)=>{e.preventDefault();}}
                                     />
                                 </div>
                             </div>

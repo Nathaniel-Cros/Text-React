@@ -2,15 +2,29 @@ import React from 'react';
 import { AuthContext } from './index';
 import { ChildrenProps } from '../../interfaces/childrenProps';
 import {AuthReducer} from './reducer';
-import {AuthC} from '../../interfaces/AuthC';
+import {AuthC, UserInfo} from '../../interfaces/AuthC';
 
 const INITIAL_STATE: AuthC = {
     isLogin: false,
     userInfo: null,
+    Login: () => {},
+    Logout: () => {},
 }
 
 export const AuthProvider = ({children}:ChildrenProps) => {
-    const [authState, dispatch] = React.useReducer(AuthReducer, INITIAL_STATE)
+    const Login = (userInfo:UserInfo) => {
+        localStorage.setItem('AuthStorage', JSON.stringify({isLogin:true, userInfo}))
+        dispatch({type: 'login', payload: {...INITIAL_STATE, isLogin: true}})
+        dispatch({type: 'userInfo', payload: userInfo})
+    }
+
+    const Logout = () => {
+        localStorage.removeItem('AuthStorage')
+        dispatch({type: 'logout', payload: {...INITIAL_STATE}})
+        dispatch({type: 'userInfo', payload: null})
+    }
+
+    const [authState, dispatch] = React.useReducer(AuthReducer, {...INITIAL_STATE, Login, Logout})
 
     React.useEffect(() => {
         const AuthStorage = localStorage.getItem('AuthStorage')
@@ -22,9 +36,12 @@ export const AuthProvider = ({children}:ChildrenProps) => {
         }
     }, [])
 
-
     return (
-        <AuthContext.Provider value={authState}>
+        <AuthContext.Provider value={{
+            ...authState,
+            Login,
+            Logout,
+        }}>
             {children}
         </AuthContext.Provider>
     )

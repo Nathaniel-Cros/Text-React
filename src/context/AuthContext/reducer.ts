@@ -3,7 +3,7 @@ import { AuthC, UserInfo } from '../../interfaces/AuthC'
 type AuthActions =
     | { type: 'login', payload: AuthC }
     | { type: 'logout', payload: AuthC }
-    | { type: 'userInfo', payload: UserInfo }
+    | { type: 'userInfo', payload: UserInfo | null }
 
 export const AuthReducer = (state: AuthC, action: AuthActions): AuthC => {
     switch (action.type) {
