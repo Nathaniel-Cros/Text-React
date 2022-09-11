@@ -1,6 +1,6 @@
 export interface UserInfo {
-    email?: string
-    username?: string
+    email: string
+    username: string
 }
 
 export interface AuthC {

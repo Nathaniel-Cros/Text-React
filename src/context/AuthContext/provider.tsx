@@ -14,9 +14,9 @@ export const AuthProvider = ({children}:ChildrenProps) => {
 
     React.useEffect(() => {
         const AuthStorage = localStorage.getItem('AuthStorage')
-        console.log('AuthStorage',AuthStorage)
         if( AuthStorage && JSON.parse(AuthStorage).isLogin ) {
             const AuthS = JSON.parse(AuthStorage)
+            //console.log('AuthStorage',AuthS)
             dispatch({type: 'login', payload: {...INITIAL_STATE, isLogin: true}})
             dispatch({type: 'userInfo', payload: AuthS.userInfo})
         }
