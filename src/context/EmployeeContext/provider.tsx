@@ -12,9 +12,11 @@ const INITIAL_STATE: EmployeeC = {
     pagination: 1,
     maxPages: 0,
     searchFilter: false,
+    show: false,
     getEmployees: ()=>{},
     filteredEmployees: (allEmployees:Employee[], init: number, end:number)=>{},
-    searchEmployees: (allEmployees:Employee[], search: string)=>{}
+    searchEmployees: (allEmployees:Employee[], search: string)=>{},
+    openAddModal: (show:boolean) => {},
 }
 
 export const EmployeeProvider = ({children}:ChildrenProps) => {
@@ -52,11 +54,21 @@ export const EmployeeProvider = ({children}:ChildrenProps) => {
         }
     }
 
+    const openAddModal = (show: boolean) => {
+        try {
+            console.log('Open Modal',show)
+            dispatch({type: 'openAddModal', payload: show})
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     const [employeeState, dispatch] = React.useReducer(EmployeeReducer, {
         ...INITIAL_STATE,
         getEmployees,
         filteredEmployees,
         searchEmployees,
+        openAddModal,
     })
 
     React.useEffect(() => {

@@ -6,7 +6,9 @@ export interface EmployeeC {
     pagination: number
     maxPages: number
     searchFilter: boolean
+    show: boolean
     getEmployees: () => void
     filteredEmployees: (allEmployees: Employee[], init: number, end: number) => void
     searchEmployees: (allEmployees: Employee[], search: string) => void
+    openAddModal: (show:boolean) => void
 }
