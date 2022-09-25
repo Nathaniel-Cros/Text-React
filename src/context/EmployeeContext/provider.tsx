@@ -92,14 +92,7 @@ export const EmployeeProvider = ({children}:ChildrenProps) => {
     },[])
 
     return (
-        <EmployeeContext.Provider value={{
-            ...employeeState,
-            getEmployees,
-            filteredEmployees,
-            searchEmployees,
-            openAddModal,
-            saveEmployees,
-        }}>
+        <EmployeeContext.Provider value={employeeState}>
             {children}
         </EmployeeContext.Provider>
     )
