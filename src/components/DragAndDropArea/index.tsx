@@ -1,14 +1,48 @@
 import React from 'react';
 import {useDropzone} from 'react-dropzone';
+import {ImageContext} from "../../context/ImageContext";
 
 const DragAndDropArea = () => {
     const [imagePreview, setImagePreview] = React.useState('')
+    const [disabledAddImage, setDisabledAddImage] = React.useState(true)
+    const imagesContext = React.useContext(ImageContext)
+
+    function getBase64Image(img:any) {
+        console.log("getBase64Image ->",img)
+        let canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+
+        let ctx = canvas.getContext("2d");
+        if( ctx ) ctx.drawImage(img, 0, 0);
+
+        let dataURL = canvas.toDataURL("image/png");
+
+        return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+    }
     
     const onDrop = React.useCallback((acceptedFiles:any) => {
         // Do something with the files
         console.log('acceptedFiles', acceptedFiles)
-        setImagePreview(URL.createObjectURL(acceptedFiles[0]))
+        if (acceptedFiles[0]) {
+            let reader = new FileReader();
+
+            reader.onload = function (e) {
+                // @ts-ignore
+                setImagePreview(e.target.result);
+            }
+
+            reader.readAsDataURL(acceptedFiles[0]);
+        }
     }, [])
+
+    React.useEffect( () => {
+        if ( imagePreview.length > 0 ) {
+            setDisabledAddImage(false)
+            return
+        }
+        setDisabledAddImage(true)
+    },[imagePreview])
     
     const {getRootProps, getInputProps} = useDropzone({
         onDrop,
@@ -61,13 +95,18 @@ const DragAndDropArea = () => {
                 </div>
             </div>
         </div>
+        <img id="preview-Image" src={imagePreview} className='hidden' alt='Preview'/>
         <div className='w-full flex items-center justify-center mt-5'>
-            <img src={imagePreview} className='w-auto h-44' alt='Preview'/>
+            <img id="preview" src={imagePreview} className='w-auto h-44' alt='Preview'/>
         </div>
         <div className='px-4 py-3 text-center sm:px-6'>
             <button
+                onClick={() => {
+                    imagesContext.addImage( getBase64Image( document.getElementById('preview-Image') ) )
+                }}
+                disabled={disabledAddImage}
                 type='button'
-                className='inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
+                className={`inline-flex justify-center rounded-md border border-transparent ${disabledAddImage? 'bg-gray-500':'bg-indigo-600 hover:bg-indigo-700'} py-2 px-4 text-sm font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2`}
             >
                 Guardar Imagen
             </button>

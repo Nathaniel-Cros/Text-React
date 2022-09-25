@@ -19,12 +19,17 @@ export const ImagesProvider = ({children}:ChildrenProps) => {
     }
 
     const addImage = (image: string) => {
+        console.log('addImage', image)
         const ImagesB64 = localStorage.getItem('ImagesStorage')
         if( ImagesB64 ) {
             const ArrayImages = JSON.parse(ImagesB64)
             ArrayImages.push( image )
             localStorage.setItem( 'ImagesStorage', JSON.stringify(ArrayImages))
+            getImages()
+            return
         }
+        localStorage.setItem( 'ImagesStorage', JSON.stringify([image]))
+        getImages()
     }
 
     const [imagesState, dispatch] = React.useReducer(ImagesReducer, {

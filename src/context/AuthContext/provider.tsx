@@ -19,7 +19,7 @@ export const AuthProvider = ({children}:ChildrenProps) => {
     }
 
     const Logout = () => {
-        localStorage.removeItem('AuthStorage')
+        localStorage.clear()
         dispatch({type: 'logout', payload: {...INITIAL_STATE}})
         dispatch({type: 'userInfo', payload: null})
     }
