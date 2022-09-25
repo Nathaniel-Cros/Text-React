@@ -10,5 +10,6 @@ export interface EmployeeC {
     getEmployees: () => void
     filteredEmployees: (allEmployees: Employee[], init: number, end: number) => void
     searchEmployees: (allEmployees: Employee[], search: string) => void
-    openAddModal: (show:boolean) => void
+    openAddModal: (show: boolean) => void
+    saveEmployees: (name: string, last_name: string, birthday: string) => void
 }

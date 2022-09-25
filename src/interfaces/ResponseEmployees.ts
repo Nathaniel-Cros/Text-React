@@ -13,3 +13,8 @@ export interface Employee {
     last_name: string
     birthday: number
 }
+
+export interface ResponseAddEmployee {
+    success: boolean
+    data: any
+}

@@ -4,7 +4,8 @@ import { ChildrenProps } from '../../interfaces/childrenProps';
 import {EmployeeReducer} from './reducer';
 import {EmployeeC} from '../../interfaces/EmployecC';
 import GetEmployees from '../../Services/getEmployees';
-import {Employee, ResponseEmployees} from "../../interfaces/ResponseEmployees";
+import {Employee, ResponseAddEmployee, ResponseEmployees} from '../../interfaces/ResponseEmployees';
+import AddEmployee from '../../Services/addEmployee';
 
 const INITIAL_STATE: EmployeeC = {
     employees: [],
@@ -17,6 +18,7 @@ const INITIAL_STATE: EmployeeC = {
     filteredEmployees: (allEmployees:Employee[], init: number, end:number)=>{},
     searchEmployees: (allEmployees:Employee[], search: string)=>{},
     openAddModal: (show:boolean) => {},
+    saveEmployees: (name: string, last_name:string, birthday:string) => {}
 }
 
 export const EmployeeProvider = ({children}:ChildrenProps) => {
@@ -63,12 +65,25 @@ export const EmployeeProvider = ({children}:ChildrenProps) => {
         }
     }
 
+    const saveEmployees = async (name: string, last_name:string, birthday:string) => {
+        try {
+            const _addEmployee:ResponseAddEmployee = await AddEmployee(name, last_name, birthday)
+            console.log('Response addEmployee ->',_addEmployee)
+            if( _addEmployee.success ) {
+                await getEmployees()
+            }
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
     const [employeeState, dispatch] = React.useReducer(EmployeeReducer, {
         ...INITIAL_STATE,
         getEmployees,
         filteredEmployees,
         searchEmployees,
         openAddModal,
+        saveEmployees,
     })
 
     React.useEffect(() => {
@@ -82,6 +97,8 @@ export const EmployeeProvider = ({children}:ChildrenProps) => {
             getEmployees,
             filteredEmployees,
             searchEmployees,
+            openAddModal,
+            saveEmployees,
         }}>
             {children}
         </EmployeeContext.Provider>
