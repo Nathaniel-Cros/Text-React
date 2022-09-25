@@ -95,10 +95,13 @@ const DragAndDropArea = () => {
                 </div>
             </div>
         </div>
+        <p id="error" className='text-red text-xl'></p>
         <img id="preview-Image" src={imagePreview} className='hidden' alt='Preview'/>
-        <div className='w-full flex items-center justify-center mt-5'>
-            <img id="preview" src={imagePreview} className='w-auto h-44' alt='Preview'/>
-        </div>
+        {imagePreview.length > 0 &&
+            <div className='w-full flex items-center justify-center mt-5'>
+                <img id="preview" src={imagePreview} className='w-auto h-44' alt='Preview'/>
+            </div>
+        }
         <div className='px-4 py-3 text-center sm:px-6'>
             <button
                 onClick={() => {
