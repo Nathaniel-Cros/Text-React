@@ -1,7 +1,11 @@
 import React from 'react';
 import EmployeeList from '../../components/EmployeeList'
 import Pagination from '../../components/Pagination';
-import SearchInput from "../../components/SearchInput";
+import SearchInput from '../../components/SearchInput';
+import FavButtonAdd from '../../components/FavButtonAdd';
+import ModalPortal from '../../components/ModalPortal';
+import ModalAdd from '../../components/ModalAdd';
+
 
 const EmployeesView = () => {
     return (
@@ -10,6 +14,10 @@ const EmployeesView = () => {
             <SearchInput/>
             <EmployeeList/>
             <Pagination/>
+            <ModalPortal>
+                <ModalAdd/>
+            </ModalPortal>
+            <FavButtonAdd/>
         </section>
     )
 }

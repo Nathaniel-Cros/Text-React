@@ -7,6 +7,7 @@ type EmployeeActions =
     | { type: 'maxPages', payload: number }
     | { type: 'filteringEmployees', payload: Employee[] }
     | { type: 'searchActive', payload: boolean }
+    | { type: 'openAddModal', payload: boolean }
 
 export const EmployeeReducer = (state: EmployeeC, action: EmployeeActions): EmployeeC => {
     switch (action.type) {
@@ -34,6 +35,11 @@ export const EmployeeReducer = (state: EmployeeC, action: EmployeeActions): Empl
             return {
                 ...state,
                 searchFilter: action.payload
+            }
+        case 'openAddModal':
+            return {
+                ...state,
+                show: action.payload
             }
         default:
             return state;
